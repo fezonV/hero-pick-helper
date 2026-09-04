@@ -1,4 +1,4 @@
-package model
+package hero
 
 type Attribute string
 
@@ -33,10 +33,10 @@ const (
 type HeroModel struct {
 	Id             int64     `json:"id"`
 	Name           string    `json:"name"`
-	Localized_name string    `json: "localized_name"`
+	Localized_name string    `json:"localized_name"`
 	Primary_attr   Attribute `json:"primary_attr"`
-	Attack_type    Attack
-	Roles          []Role
+	Attack_type    Attack    `json:"attack_type"`
+	Roles          []Role    `json:"roles"`
 }
 
 func CreateHeroModel(
@@ -47,6 +47,7 @@ func CreateHeroModel(
 	attack_type Attack,
 	roles []Role,
 ) (*HeroModel, error) {
+
 	return &HeroModel{
 		Id:             id,
 		Name:           name,
