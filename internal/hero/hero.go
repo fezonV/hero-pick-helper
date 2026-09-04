@@ -39,6 +39,30 @@ type HeroModel struct {
 	Roles          []Role    `json:"roles"`
 }
 
+func (h HeroModel) valid() error {
+	switch h.Primary_attr {
+	case AttributeAgility, AttributeIntellect, AttributeStrength, AttributeUniversal:
+	default:
+		return ErrWrongAttr
+	}
+
+	switch h.Attack_type {
+	case Melee, Ranged:
+	default:
+		return ErrWrongAttackType
+	}
+
+	for _, role := range h.Roles {
+		switch role {
+		case Carry, Support, Nuker, Disabler, Jungler, Durable, Escape, Pusher, Initiator:
+		default:
+			return ErrWrongRole
+		}
+	}
+	return nil
+
+}
+
 func CreateHeroModel(
 	id int64,
 	name string,
@@ -48,12 +72,18 @@ func CreateHeroModel(
 	roles []Role,
 ) (*HeroModel, error) {
 
-	return &HeroModel{
+	hm := &HeroModel{
 		Id:             id,
 		Name:           name,
 		Localized_name: localized_name,
 		Primary_attr:   primary_attr,
 		Attack_type:    attack_type,
 		Roles:          roles,
-	}, nil
+	}
+
+	err := hm.valid()
+	if err != nil {
+		return nil, err
+	}
+	return hm, nil
 }
