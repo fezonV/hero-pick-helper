@@ -22,17 +22,38 @@ type Stats struct {
 	Win3  int64 `json:"3_win"`
 
 	Pick4 int64 `json:"4_pick"` // герои
-	Win4  int64
+	Win4  int64 `json:"4_win"`
 
 	Pick5 int64 `json:"5_pick"` // легенды
-	Win5  int64
+	Win5  int64 `json:"5_win"`
 
 	Pick6 int64 `json:"6_pick"` // властелины
-	Win6  int64
+	Win6  int64 `json:"6_win"`
 
 	Pick7 int64 `json:"7_pick"` // божества
-	Win7  int64
+	Win7  int64 `json:"7_win"`
+}
 
-	Pick8 int64 `json:"8_pick"` // титаны
-	Win8  int64
+func (s Stats) Winrate(rank int) (float32, error) {
+	if rank > 7 || rank <= 0 {
+		return 0.0, ErrBadRank
+	}
+	switch rank {
+	case 1:
+		return float32(s.Win1) / float32(s.Pick1), nil
+	case 2:
+		return float32(s.Win2) / float32(s.Pick2), nil
+	case 3:
+		return float32(s.Win3) / float32(s.Pick3), nil
+	case 4:
+		return float32(s.Win4) / float32(s.Pick4), nil
+	case 5:
+		return float32(s.Win5) / float32(s.Pick5), nil
+	case 6:
+		return float32(s.Win6) / float32(s.Pick6), nil
+	case 7:
+		return float32(s.Win7) / float32(s.Pick7), nil
+	default:
+		return 0.0, ErrBadRank
+	}
 }
