@@ -7,4 +7,5 @@ var (
 	ErrWrongAttackType = errors.New("Wrong hero attack type")
 	ErrWrongRole       = errors.New("Wrong hero role")
 	ErrBadRank         = errors.New("Bad rank number")
+	ErrZeroMatches     = errors.New("No matches played on this hero")
 )

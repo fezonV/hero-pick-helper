@@ -40,18 +40,39 @@ func (s Stats) Winrate(rank int) (float32, error) {
 	}
 	switch rank {
 	case 1:
+		if s.Pick1 == 0 {
+			return 0.0, ErrZeroMatches
+		}
 		return float32(s.Win1) / float32(s.Pick1), nil
 	case 2:
+		if s.Pick2 == 0 {
+			return 0.0, ErrZeroMatches
+		}
 		return float32(s.Win2) / float32(s.Pick2), nil
 	case 3:
+		if s.Pick3 == 0 {
+			return 0.0, ErrZeroMatches
+		}
 		return float32(s.Win3) / float32(s.Pick3), nil
 	case 4:
+		if s.Pick4 == 0 {
+			return 0.0, ErrZeroMatches
+		}
 		return float32(s.Win4) / float32(s.Pick4), nil
 	case 5:
+		if s.Pick5 == 0 {
+			return 0.0, ErrZeroMatches
+		}
 		return float32(s.Win5) / float32(s.Pick5), nil
 	case 6:
+		if s.Pick6 == 0 {
+			return 0.0, ErrZeroMatches
+		}
 		return float32(s.Win6) / float32(s.Pick6), nil
 	case 7:
+		if s.Pick7 == 0 {
+			return 0.0, ErrZeroMatches
+		}
 		return float32(s.Win7) / float32(s.Pick7), nil
 	default:
 		return 0.0, ErrBadRank

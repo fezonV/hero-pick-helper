@@ -6,7 +6,10 @@ type Matchup struct {
 	Wins        int64 `json:"wins"`
 }
 
-// Считает винрейт для каждого персонажа против того, которого мы передали в паттерне
-func (mu Matchup) Winrate() float32 {
-	return float32(mu.GamesPlayed) / float32(mu.Wins)
+// считает винрейт исходного героя против HeroID из этого matchup
+func (mu Matchup) Winrate() (float32, error) {
+	if mu.GamesPlayed == 0 {
+		return 0.0, ErrZeroMatches
+	}
+	return float32(mu.Wins) / float32(mu.GamesPlayed), nil
 }
