@@ -29,3 +29,5 @@ func GetHeroes() ([]hero.HeroModel, error) {
 	}
 	return heroes, nil
 }
+
+func GetHeroStats() ([])

@@ -1,4 +1,4 @@
-package hero
+package models
 
 type Attribute string
 
@@ -86,4 +86,13 @@ func CreateHeroModel(
 		return nil, err
 	}
 	return hm, nil
+}
+
+type StatsModel struct {
+	Id             int64     `json:"id"`
+	Name           string    `json:"name"`
+	Localized_name string    `json:"localized_name"`
+	Primary_attr   Attribute `json:"primary_attr"`
+	Attack_type    Attack    `json:"attack_type"`
+	Roles          []Role    `json:"roles"`
 }

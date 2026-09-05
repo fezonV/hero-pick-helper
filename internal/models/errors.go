@@ -1,4 +1,4 @@
-package hero
+package models
 
 import "errors"
 
