@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/fezonV/hero-pick-helper/internal/models"
+	"github.com/fezonV/hero-pick-helper/internal/opendota"
 	"github.com/fezonV/hero-pick-helper/service"
 )
 
@@ -12,21 +14,31 @@ func main() {
 	//stats, err := service.GetHeroStats(ctx)
 	var ID int64
 	fmt.Print("Введите номер героя: ")
-	fmt.Scan(&ID)
-	matchups, err := service.GetHeroMatchups(ctx, ID)
+	_, err := fmt.Scan(&ID)
+	if err != nil {
+		panic(err)
+	}
+	openDotaProvider := opendota.NewProvider()
+	matchups, err := openDotaProvider.GetHeroMatchups(ctx, ID)
 	hero, err := service.GetHeroByID(ctx, ID)
 	if err != nil {
 		panic(err)
 	}
 	fmt.Println("Матчапы против ", hero.Localized_name)
-
+	mapOfHeroes, err := service.GetHeroesMap(ctx)
+	if err != nil {
+		panic(err)
+	}
 	for _, v := range matchups {
-		curhero, err := service.GetHeroByID(ctx, v.HeroID)
-		if err != nil {
-			panic(err)
+		curhero, ok := mapOfHeroes[v.HeroID]
+		if ok == false {
+			panic(models.ErrHeroNotFound)
 		}
 		winrate, err := v.Winrate()
-		fmt.Println(curhero, ": ", winrate)
+		if err != nil {
+			fmt.Println("Нет игр")
+		}
+		fmt.Println(curhero.Localized_name, ": ", winrate, "(", v.Wins, "/", v.GamesPlayed, ")")
 
 	}
 	/*
