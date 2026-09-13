@@ -18,6 +18,9 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+
+
 	openDotaProvider := opendota.NewProvider()
 	matchups, err := openDotaProvider.GetHeroMatchups(ctx, ID)
 	hero, err := service.GetHeroByID(ctx, ID)
