@@ -7,5 +7,5 @@ import (
 )
 
 type Provider interface {
-	GetHeroMatchups(ctx context.Context, heroID int64) ([]models.Matchup, error)
+	GetHeroMatchups(ctx context.Context, heroID int64) ([]models.OpenDotaMatchup, error)
 }

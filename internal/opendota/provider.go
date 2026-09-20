@@ -24,7 +24,7 @@ func NewProvider() *Provider {
 	}
 }
 
-func (p *Provider) GetHeroMatchups(ctx context.Context, heroID int64) ([]models.Matchup, error) {
+func (p *Provider) GetHeroMatchups(ctx context.Context, heroID int64) ([]models.OpenDotaMatchup, error) {
 
 	url := fmt.Sprintf("%s/heroes/%d/matchups", p.baseURL, heroID)
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
@@ -42,7 +42,7 @@ func (p *Provider) GetHeroMatchups(ctx context.Context, heroID int64) ([]models.
 		return nil, fmt.Errorf("unexpected status code %d", resp.StatusCode)
 	}
 
-	matchupArr := make([]models.Matchup, 0)
+	matchupArr := make([]models.OpenDotaMatchup, 0)
 	err = json.NewDecoder(resp.Body).Decode(&matchupArr)
 
 	if err != nil {

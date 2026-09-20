@@ -10,7 +10,7 @@ import (
 	"github.com/fezonV/hero-pick-helper/internal/models"
 )
 
-func GetHeroes(ctx context.Context) ([]models.HeroModel, error) {
+func GetHeroes(ctx context.Context) ([]models.OpenDotaModel, error) {
 	ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
 	defer cancel()
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, "https://api.opendota.com/api/heroes", nil)
@@ -25,7 +25,7 @@ func GetHeroes(ctx context.Context) ([]models.HeroModel, error) {
 		return nil, fmt.Errorf("unexpected status code %d", resp.StatusCode)
 	}
 	defer resp.Body.Close()
-	var heroes []models.HeroModel
+	var heroes []models.OpenDotaModel
 
 	err = json.NewDecoder(resp.Body).Decode(&heroes)
 	if err != nil {
@@ -71,25 +71,25 @@ func GetHeroStats(ctx context.Context) (map[int64]models.Stats, error) {
 	return statsMap, nil
 }
 
-func GetHeroByID(ctx context.Context, HeroID int64) (models.HeroModel, error) {
+func GetHeroByID(ctx context.Context, HeroID int64) (models.OpenDotaModel, error) {
 	heroes, err := GetHeroes(ctx)
 	if err != nil {
-		return models.HeroModel{}, err
+		return models.OpenDotaModel{}, err
 	}
 	for i := range heroes {
 		if (heroes[i].Id) == HeroID {
 			return heroes[i], nil
 		}
 	}
-	return models.HeroModel{}, models.ErrHeroNotFound
+	return models.OpenDotaModel{}, models.ErrHeroNotFound
 }
-func GetHeroesMap(ctx context.Context) (map[int64]models.HeroModel, error) {
+func GetHeroesMap(ctx context.Context) (map[int64]models.OpenDotaModel, error) {
 	heroes, err := GetHeroes(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	heroesMap := make(map[int64]models.HeroModel)
+	heroesMap := make(map[int64]models.OpenDotaModel)
 
 	for i := range heroes {
 		heroesMap[heroes[i].Id] = heroes[int64(i)]

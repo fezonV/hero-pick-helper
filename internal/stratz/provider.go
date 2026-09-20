@@ -24,7 +24,7 @@ func newProvider() *Provider {
 	}
 }
 
-func (p *Provider) GetHeroMatchups(ctx context.Context, heroID int64) ([]models.Matchup, error) {
+func (p *Provider) GetHeroMatchups(ctx context.Context, heroID int64) ([]models.OpenDotaMatchup, error) {
 	var request graphQLRequest
 	body, err := json.Marshal(request)
 	if err != nil {
@@ -42,4 +42,5 @@ func (p *Provider) GetHeroMatchups(ctx context.Context, heroID int64) ([]models.
 	}
 	defer resp.Body.Close()
 
+	
 }

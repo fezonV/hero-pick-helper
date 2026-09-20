@@ -30,7 +30,7 @@ const (
 	Initiator Role = "Initiator"
 )
 
-type HeroModel struct {
+type OpenDotaModel struct {
 	Id             int64     `json:"id"`
 	Name           string    `json:"name"`
 	Localized_name string    `json:"localized_name"`
@@ -39,7 +39,7 @@ type HeroModel struct {
 	Roles          []Role    `json:"roles"`
 }
 
-func (h HeroModel) valid() error {
+func (h OpenDotaModel) valid() error {
 	switch h.Primary_attr {
 	case AttributeAgility, AttributeIntellect, AttributeStrength, AttributeUniversal:
 	default:
@@ -70,9 +70,9 @@ func CreateHeroModel(
 	primary_attr Attribute,
 	attack_type Attack,
 	roles []Role,
-) (*HeroModel, error) {
+) (*OpenDotaModel, error) {
 
-	hm := &HeroModel{
+	hm := &OpenDotaModel{
 		Id:             id,
 		Name:           name,
 		Localized_name: localized_name,
